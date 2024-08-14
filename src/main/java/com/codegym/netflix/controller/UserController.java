@@ -21,4 +21,9 @@ public class UserController {
     public UserResponseDto registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         return userService.registerNewUser(userRequestDto);
     }
+
+    @GetMapping("/signin")
+    public UserResponseDto signInUser(@RequestBody UserRequestDto userRequestDto) {
+        return userService.signin(userRequestDto);
+    }
 }
