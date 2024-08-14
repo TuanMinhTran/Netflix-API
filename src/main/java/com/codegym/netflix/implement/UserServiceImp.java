@@ -6,6 +6,7 @@ import com.codegym.netflix.dto.response.UserResponseDto;
 import com.codegym.netflix.entity.UserEntity;
 import com.codegym.netflix.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +23,12 @@ public class UserServiceImp implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public UserResponseDto registerNewUser(UserRequestDto userRequestDto) {
+    public ResponseEntity<UserResponseDto> registerNewUser(UserRequestDto userRequestDto) {
         UserEntity newUser = userConverter.dtoToEntity(userRequestDto);
-
-        String hashedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(hashedPassword);
+        newUser.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 
         UserEntity savedUser = userRepository.save(newUser);
-        return userConverter.entityToDto(savedUser);
+        UserResponseDto responseDto = userConverter.entityToDto(savedUser);
+        return ResponseEntity.ok(responseDto);
     }
 }
