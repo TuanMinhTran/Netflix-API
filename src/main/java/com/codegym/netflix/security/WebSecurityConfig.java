@@ -1,4 +1,4 @@
-package com.codegym.netflix.exception;
+package com.codegym.netflix.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

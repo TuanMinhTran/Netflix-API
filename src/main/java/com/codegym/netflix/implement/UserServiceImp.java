@@ -1,14 +1,16 @@
-package com.codegym.netflix.service;
+package com.codegym.netflix.implement;
 
 import com.codegym.netflix.converter.UserConverter;
 import com.codegym.netflix.dto.request.UserRequestDto;
 import com.codegym.netflix.dto.response.UserResponseDto;
 import com.codegym.netflix.entity.UserEntity;
 import com.codegym.netflix.repository.UserRepository;
+import com.codegym.netflix.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -23,12 +25,16 @@ public class UserServiceImp implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public ResponseEntity<UserResponseDto> registerNewUser(UserRequestDto userRequestDto) {
+    public UserResponseDto registerNewUser(UserRequestDto userRequestDto) {
         UserEntity newUser = userConverter.dtoToEntity(userRequestDto);
         newUser.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 
         UserEntity savedUser = userRepository.save(newUser);
-        UserResponseDto responseDto = userConverter.entityToDto(savedUser);
-        return ResponseEntity.ok(responseDto);
+        return userConverter.entityToDto(savedUser);
+    }
+
+    @Override
+    public boolean isUserExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }
