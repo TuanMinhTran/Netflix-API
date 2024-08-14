@@ -33,20 +33,21 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserResponseDto signin(UserRequestDto userRequestDto) {
-        // Tìm User trong cơ sở dữ liệu bằng email
+    public UserResponseDto signIn(UserRequestDto userRequestDto) {
         UserEntity user = userRepository.findByEmail(userRequestDto.getEmail());
+
+        if (user != null && bCryptPasswordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Singin Successsfully");
+        }
 
         if (user == null) {
             throw new RuntimeException("User not found");
         }
 
-        // Kiểm tra mật khẩu
         if (!bCryptPasswordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // Trả về thông tin người dùng
         return userConverter.entityToDto(user);
     }
 }

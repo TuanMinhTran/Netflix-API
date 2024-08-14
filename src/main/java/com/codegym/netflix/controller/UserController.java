@@ -24,6 +24,6 @@ public class UserController {
 
     @GetMapping("/signin")
     public UserResponseDto signInUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.signin(userRequestDto);
+        return userService.signIn(userRequestDto);
     }
 }
