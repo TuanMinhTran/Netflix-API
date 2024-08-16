@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class MovieConverter {
+
     public MovieResponseDto toDto(MovieEntity movieEntity) {
         MovieResponseDto dto = new MovieResponseDto();
         dto.setId(movieEntity.getId());
