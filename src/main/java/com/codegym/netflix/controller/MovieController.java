@@ -31,8 +31,8 @@ public class MovieController {
     }
 
     @GetMapping("/movies/category/{categoryId}")
-    public ResponseEntity<List<MovieResponseDto>> getMoviesByCategory(@PathVariable("categoryId") Long category) {
-        List<MovieResponseDto> movies = movieService.getMoviesByCategory(category);
+    public ResponseEntity<List<MovieResponseDto>> getMoviesByCategory(@PathVariable("categoryId") Long categoryId) {
+        List<MovieResponseDto> movies = movieService.getMoviesByCategory(categoryId);
         return ResponseEntity.ok(movies);
     }
 }

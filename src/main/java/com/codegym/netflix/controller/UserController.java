@@ -31,7 +31,7 @@ public class UserController {
                 .body(userResponseDto);
     }
 
-    @GetMapping("/signin")
+    @PostMapping("/signin")
     public UserResponseDto signInUser(@RequestBody UserRequestDto userRequestDto) {
         return userService.signIn(userRequestDto);
     }

@@ -7,5 +7,5 @@ import java.util.List;
 public interface MovieService {
     List<MovieResponseDto> findAllMovies();
     MovieResponseDto getMovieById(Long id);
-    List<MovieResponseDto> getMoviesByCategory(Long category);
+    List<MovieResponseDto> getMoviesByCategory(Long categoryId);
 }
