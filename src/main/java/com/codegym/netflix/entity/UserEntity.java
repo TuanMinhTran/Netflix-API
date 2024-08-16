@@ -3,7 +3,7 @@ package com.codegym.netflix.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "user_email"))
 public class UserEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)

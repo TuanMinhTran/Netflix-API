@@ -6,4 +6,5 @@ import com.codegym.netflix.dto.response.UserResponseDto;
 public interface UserService {
     UserResponseDto registerNewUser(UserRequestDto userRequestDto);
     UserResponseDto signIn(UserRequestDto userRequestDto);
+    boolean isUserExists(String email);
 }

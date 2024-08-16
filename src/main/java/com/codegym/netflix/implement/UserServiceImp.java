@@ -1,13 +1,16 @@
-package com.codegym.netflix.service;
+package com.codegym.netflix.implement;
 
 import com.codegym.netflix.converter.UserConverter;
 import com.codegym.netflix.dto.request.UserRequestDto;
 import com.codegym.netflix.dto.response.UserResponseDto;
 import com.codegym.netflix.entity.UserEntity;
 import com.codegym.netflix.repository.UserRepository;
+import com.codegym.netflix.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -24,9 +27,7 @@ public class UserServiceImp implements UserService {
     @Override
     public UserResponseDto registerNewUser(UserRequestDto userRequestDto) {
         UserEntity newUser = userConverter.dtoToEntity(userRequestDto);
-
-        String hashedPassword = bCryptPasswordEncoder.encode(newUser.getPassword());
-        newUser.setPassword(hashedPassword);
+        newUser.setPassword(bCryptPasswordEncoder.encode(userRequestDto.getPassword()));
 
         UserEntity savedUser = userRepository.save(newUser);
         return userConverter.entityToDto(savedUser);
@@ -34,20 +35,23 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserResponseDto signIn(UserRequestDto userRequestDto) {
-        UserEntity user = userRepository.findByEmail(userRequestDto.getEmail());
+        Optional<UserEntity> userOptional = userRepository.findByEmail(userRequestDto.getEmail());
 
-        if (user != null && bCryptPasswordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Singin Successsfully");
-        }
-
-        if (user == null) {
+        if (!userOptional.isPresent()) {
             throw new RuntimeException("User not found");
         }
+
+        UserEntity user = userOptional.get();
 
         if (!bCryptPasswordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
         return userConverter.entityToDto(user);
+    }
+
+    @Override
+    public boolean isUserExists(String email) {
+        return userRepository.findByEmail(email).isPresent();
     }
 }
