@@ -14,19 +14,18 @@ public class UserEntity {
 
     @Column(name = "user_password")
     private String password;
-
-    @Column(name ="subscriptionType")
-    private String subscriptionType;
+//
+//    @Column(name ="subscriptionType")
+//    private String subscriptionType;
 
     public UserEntity() {
     }
 
-    public UserEntity(String email, String password , String subscriptionType) {
+    public UserEntity(Long id, String email, String password) {
+        this.id = id;
         this.email = email;
         this.password = password;
-        this.subscriptionType = subscriptionType;
     }
-
 
     public Long getId() {
         return id;
@@ -50,13 +49,5 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSubscriptionType() {
-        return subscriptionType;
-    }
-
-    public void setSubscriptionType(String subscriptionType) {
-        this.subscriptionType = subscriptionType;
     }
 }

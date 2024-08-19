@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +25,19 @@ public class UserServiceImp implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public List<UserResponseDto> getAllUsers() {
+        List<UserEntity> users = (List<UserEntity>) userRepository.findAll();
+        List<UserResponseDto> userDtos = new ArrayList<>();
+
+        for (UserEntity user : users) {
+            UserResponseDto userDto = userConverter.entityToDto(user);
+            userDtos.add(userDto);
+        }
+
+        return userDtos;
+    }
 
     @Override
     public UserResponseDto registerNewUser(UserRequestDto userRequestDto) {
