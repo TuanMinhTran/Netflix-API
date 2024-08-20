@@ -12,7 +12,7 @@ public class DeviceServiceImpl extends DeviceService {
     private DeviceRepository deviceRepository;
 
     @Override
-    public DeviceEntity findDeviceById(Long deviceId) {
-        return deviceRepository.findById(deviceId).orElse(null);
+    public DeviceEntity findDeviceByName(String deviceName) {
+        return deviceRepository.findByDeviceName(deviceName).orElse(null);
     }
 }

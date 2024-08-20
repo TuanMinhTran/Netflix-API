@@ -18,11 +18,24 @@ public class PackageConverter {
     private DeviceService deviceService;
 
     public PackageResponseDto toDto(PackageEntity packageEntity) {
+        List<String> devices = new ArrayList<>();
 
-        List<Long> deviceIds = new ArrayList<>();
-        for (PackageDeviceEntity packageDeviceEntity : packageEntity.getPackageDevicesEntity()) {
-            Long deviceId = packageDeviceEntity.getDeviceEntity().getId();
-            deviceIds.add(deviceId);
+        for (PackageDeviceEntity dp : packageEntity.getPackageDevicesEntity()) {
+            DeviceEntity deviceEntity = dp.getDeviceEntity();
+            if (dp.getDeviceEntity() != null) {
+                if (deviceEntity.getDevice1() != null) {
+                    devices.add(deviceEntity.getDevice1());
+                }
+                if (deviceEntity.getDevice2() != null) {
+                    devices.add(deviceEntity.getDevice2());
+                }
+                if (deviceEntity.getDevice3() != null) {
+                    devices.add(deviceEntity.getDevice3());
+                }
+                if (deviceEntity.getDevice4() != null) {
+                    devices.add(deviceEntity.getDevice4());
+                }
+            }
         }
 
         PackageResponseDto packageResponseDto = new PackageResponseDto();
@@ -31,7 +44,7 @@ public class PackageConverter {
         packageResponseDto.setPackPrice(packageEntity.getPackPrice());
         packageResponseDto.setQuality(packageEntity.getQuality());
         packageResponseDto.setResolution(packageEntity.getResolution());
-        packageResponseDto.setDeviceIds(deviceIds);
+        packageResponseDto.setDeviceNames(devices);
 
         return packageResponseDto;
     }
@@ -44,13 +57,14 @@ public class PackageConverter {
         packageEntity.setResolution(packageResponseDto.getResolution());
 
         List<PackageDeviceEntity> packageDeviceEntities = new ArrayList<>();
-        for (Long deviceId : packageResponseDto.getDeviceIds()) {
-            DeviceEntity deviceEntity = deviceService.findDeviceById(deviceId);
+        for (String deviceName : packageResponseDto.getDeviceNames()) {
+            DeviceEntity deviceEntity = deviceService.findDeviceByName(deviceName);
             if (deviceEntity != null) {
                 PackageDeviceEntity packageDeviceEntity = new PackageDeviceEntity();
                 packageDeviceEntity.setDeviceEntity(deviceEntity);
                 packageDeviceEntity.setPackageEntity(packageEntity);
                 packageDeviceEntities.add(packageDeviceEntity);
+
             }
         }
 

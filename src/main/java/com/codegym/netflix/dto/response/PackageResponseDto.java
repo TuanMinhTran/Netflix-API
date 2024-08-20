@@ -8,19 +8,19 @@ public class PackageResponseDto {
     private Double packPrice;
     private String quality;
     private String resolution;
-    private List<Long> deviceIds;
+    private List<String> deviceNames;
 
     public PackageResponseDto() {
     }
 
-    public PackageResponseDto(Long id, String packName, Double packPrice,
-                              String resolution, String quality, List<Long> deviceIds) {
+    public PackageResponseDto(Long id, String packName, Double packPrice, String quality,
+                              String resolution, List<String> deviceNames) {
         this.id = id;
         this.packName = packName;
         this.packPrice = packPrice;
-        this.resolution = resolution;
         this.quality = quality;
-        this.deviceIds = deviceIds;
+        this.resolution = resolution;
+        this.deviceNames = deviceNames;
     }
 
     public Long getId() {
@@ -63,11 +63,11 @@ public class PackageResponseDto {
         this.quality = quality;
     }
 
-    public List<Long> getDeviceIds() {
-        return deviceIds;
+    public List<String> getDeviceNames() {
+        return deviceNames;
     }
 
-    public void setDeviceIds(List<Long> deviceIds) {
-        this.deviceIds = deviceIds;
+    public void setDeviceNames(List<String> deviceNames) {
+        this.deviceNames = deviceNames;
     }
 }

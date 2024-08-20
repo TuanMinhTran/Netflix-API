@@ -19,6 +19,7 @@ public class PackageController {
 
     @GetMapping("/packages")
     public ResponseEntity<List<PackageResponseDto>> getAllPackages() {
-        return ResponseEntity.ok(packageService.findAllPackages());
+        List<PackageResponseDto> packages = packageService.findAllPackages();
+        return ResponseEntity.ok(packages);
     }
 }
