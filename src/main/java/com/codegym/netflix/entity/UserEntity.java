@@ -14,17 +14,19 @@ public class UserEntity {
 
     @Column(name = "user_password")
     private String password;
-//
-//    @Column(name ="subscriptionType")
-//    private String subscriptionType;
+
+    @ManyToOne
+    @JoinColumn(name = "package_id")
+    private PackageEntity packageEntity;
 
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String email, String password) {
+    public UserEntity(Long id, String email, String password, PackageEntity packageEntity) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.packageEntity = packageEntity;
     }
 
     public Long getId() {
@@ -49,5 +51,13 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public PackageEntity getPackageEntity() {
+        return packageEntity;
+    }
+
+    public void setPackageEntity(PackageEntity packageEntity) {
+        this.packageEntity = packageEntity;
     }
 }
