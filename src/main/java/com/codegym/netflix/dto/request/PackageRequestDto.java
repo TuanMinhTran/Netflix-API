@@ -5,15 +5,35 @@ public class PackageRequestDto {
     private Double packPrice;
     private String quality;
     private String resolution;
+    private Long userId;
+    private Long packageId;
 
     public PackageRequestDto() {
     }
 
-    public PackageRequestDto(String packName, Double packPrice, String resolution, String quality) {
+    public PackageRequestDto(Long userId, Long packageId, String packName, Double packPrice, String quality, String resolution) {
+        this.userId = userId;
+        this.packageId = packageId;
         this.packName = packName;
         this.packPrice = packPrice;
-        this.resolution = resolution;
         this.quality = quality;
+        this.resolution = resolution;
+    }
+
+    public Long getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(Long packageId) {
+        this.packageId = packageId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getPackName() {

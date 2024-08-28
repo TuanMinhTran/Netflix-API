@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface PackageService {
     List<PackageResponseDto> findAllPackages();
+    PackageResponseDto findPackageById(Long id);
+    void selectPackage(Long userId, Long packageId);
 }

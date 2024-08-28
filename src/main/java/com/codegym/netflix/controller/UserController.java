@@ -42,6 +42,4 @@ public class UserController {
     public UserResponseDto signInUser(@RequestBody UserRequestDto userRequestDto) {
         return userService.signIn(userRequestDto);
     }
-
-
 }
