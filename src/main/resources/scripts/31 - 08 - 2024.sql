@@ -11,6 +11,8 @@ create table users (
 );
 
 alter table users add column nickname nvarchar(20);
+ALTER TABLE users DROP COLUMN nickname;
+select * from users;
 
 create table categories (
 	id bigint primary key auto_increment,
@@ -99,6 +101,50 @@ insert into package_device ( package_id, device_id) values
 select * from package_device;
 
 TRUNCATE TABLE package_device;
+
+create table title_avatar (
+	id bigint primary key auto_increment,
+    title VARCHAR(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+);
+
+insert into title_avatar ( title ) values 
+("Kinh Điển"),
+("Cá Vồ Lén Lút");
+
+select * from title_avatar;
+
+create table avatars (
+	id bigint primary key auto_increment,
+    avatar_url varchar(150)
+);
+
+ALTER TABLE avatars ADD COLUMN title_avatar_id bigint;
+ALTER TABLE avatars ADD CONSTRAINT fk_title_avatar_id FOREIGN KEY (title_avatar_id) REFERENCES title_avatar(id);
+TRUNCATE TABLE avatars;
+
+insert into avatars ( avatar_url,  title_avatar_id) values 
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-1.jpg?alt=media&token=48924cb3-621c-45e4-b6ab-56e0e07060ff", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-2.jpg?alt=media&token=6c87dedd-dc09-4982-9fa1-d6e45b990294", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-3.jpg?alt=media&token=7ae4dd69-0ca2-4798-979b-85bbcff67b1f", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-4.jpg?alt=media&token=7fee3edc-cccd-4ff5-9499-e3894d863888", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-5.jpg?alt=media&token=beaf209d-7f74-4c34-9a01-c0b4b0c640b2", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-6.jpg?alt=media&token=efcecfa9-d133-4428-9dca-700414f51ce9", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-7.jpg?alt=media&token=6dd231e7-e706-451d-bad2-39c9ba675093", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/avatar-edit.jpg?alt=media&token=bd5931c5-26a5-4d01-ba89-ba62b9f32d77", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/avatar-instruct.jpg?alt=media&token=101463cc-9026-49b6-832c-ad0c21b1a533", 1),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-6.jpg?alt=media&token=efcecfa9-d133-4428-9dca-700414f51ce9", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-2.jpg?alt=media&token=6c87dedd-dc09-4982-9fa1-d6e45b990294", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-3.jpg?alt=media&token=7ae4dd69-0ca2-4798-979b-85bbcff67b1f", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-1.jpg?alt=media&token=48924cb3-621c-45e4-b6ab-56e0e07060ff", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-4.jpg?alt=media&token=7fee3edc-cccd-4ff5-9499-e3894d863888", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-5.jpg?alt=media&token=beaf209d-7f74-4c34-9a01-c0b4b0c640b2", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/avatar-edit.jpg?alt=media&token=bd5931c5-26a5-4d01-ba89-ba62b9f32d77", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/classic-7.jpg?alt=media&token=6dd231e7-e706-451d-bad2-39c9ba675093", 2),
+("https://firebasestorage.googleapis.com/v0/b/netflix-d2442.appspot.com/o/avatar-instruct.jpg?alt=media&token=101463cc-9026-49b6-832c-ad0c21b1a533", 2);
+
+
+select * from avatars;
+SELECT * FROM avatars WHERE title_avatar_id = 2;
 
 ALTER TABLE movies
 MODIFY title VARCHAR(50) CHARACTER SET utf8mb4;
