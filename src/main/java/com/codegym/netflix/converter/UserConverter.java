@@ -12,6 +12,7 @@ public class UserConverter {
         UserEntity user = new UserEntity();
         user.setEmail(userRequestDto.getEmail());
         user.setPassword(userRequestDto.getPassword());
+        user.setNickname(userRequestDto.getNickname());
         return user;
     }
 
@@ -20,6 +21,7 @@ public class UserConverter {
         dto.setId(user.getId());
         dto.setEmail(user.getEmail());
         dto.setPassword(user.getPassword());
+        dto.setNickname(user.getNickname());
         return dto;
     }
 }
