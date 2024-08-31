@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,6 +27,15 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("/check-email")
+    public ResponseEntity<String> checkUserByEmail(@RequestParam("check-email") String email) {
+        if (userService.isUserExists(email)) {
+            return ResponseEntity.ok("exists");
+        } else {
+            return ResponseEntity.ok("not exists");
+        }
+    }
+
     @PostMapping("/register")
     ResponseEntity<?>  registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         if (userService.isUserExists(userRequestDto.getEmail())){
@@ -39,7 +49,12 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public UserResponseDto signInUser(@RequestBody UserRequestDto userRequestDto) {
-        return userService.signIn(userRequestDto);
+    ResponseEntity<?> signInUser(@RequestBody UserRequestDto userRequestDto) {
+        try {
+            UserResponseDto response = userService.signIn(userRequestDto);
+            return ResponseEntity.ok(response);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatus()).body(e.getReason());
+        }
     }
 }

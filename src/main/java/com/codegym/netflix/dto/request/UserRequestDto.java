@@ -11,9 +11,12 @@ public class UserRequestDto {
     @Size(min = 8, message = "Mật khẩu phải từ 8 kí tự trở lên")
     private String password;
 
-    public UserRequestDto(String email, String password) {
+    private String nickname;
+
+    public UserRequestDto(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -30,5 +33,13 @@ public class UserRequestDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

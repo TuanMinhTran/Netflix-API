@@ -6,9 +6,13 @@ import com.codegym.netflix.dto.response.UserResponseDto;
 import com.codegym.netflix.entity.UserEntity;
 import com.codegym.netflix.repository.UserRepository;
 import com.codegym.netflix.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +21,7 @@ import java.util.Optional;
 @Service
 public class UserServiceImp implements UserService {
 
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImp.class);
     @Autowired
     private UserRepository userRepository;
 
@@ -53,16 +58,17 @@ public class UserServiceImp implements UserService {
         Optional<UserEntity> userOptional = userRepository.findByEmail(userRequestDto.getEmail());
 
         if (!userOptional.isPresent()) {
-            throw new RuntimeException("User not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy tài khoản.");
         }
 
         UserEntity user = userOptional.get();
 
         if (!bCryptPasswordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Mật khẩu không đúng.");
         }
 
-        return userConverter.entityToDto(user);
+        UserResponseDto userResponseDto = userConverter.entityToDto(user);
+        return userResponseDto;
     }
 
     @Override
