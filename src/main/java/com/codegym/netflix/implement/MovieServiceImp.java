@@ -10,6 +10,8 @@ import com.codegym.netflix.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +39,20 @@ public class MovieServiceImp implements MovieService {
 
     @Override
     public List<MovieResponseDto> getMoviesByCategory(Long categoryId) {
-        CategoryEntity category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Category not found"));
-        List<MovieEntity> movies = movieRepository.findByCategoryEntity(category);
+        List<MovieEntity> movies;
+
+        if (categoryId == 1L) {
+            movies = (List<MovieEntity>) movieRepository.findAll();
+        } else {
+            CategoryEntity category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+            movies = movieRepository.findByCategoryEntity(category);
+
+            if (movies.isEmpty()) {
+                return new ArrayList<>();
+            }
+        }
+
         return movies.stream()
                 .map(movieConverter::toDto)
                 .collect(Collectors.toList());
