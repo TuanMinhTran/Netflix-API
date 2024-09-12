@@ -13,15 +13,23 @@ public class CategoryEntity {
     @Column(name = "cate_name")
     private String name;
 
+    @Column(name = "src_path")
+    private String path;
+
+    @Column(name = "title")
+    private String title;
+
     @OneToMany(mappedBy = "categoryEntity")
     private List<MovieEntity> moviesEntity;
 
     public CategoryEntity() {
     }
 
-    public CategoryEntity(Long id, String name, List<MovieEntity> moviesEntity) {
+    public CategoryEntity(Long id, String name, String path, String title, List<MovieEntity> moviesEntity) {
         this.id = id;
         this.name = name;
+        this.path = path;
+        this.title = title;
         this.moviesEntity = moviesEntity;
     }
 
@@ -39,6 +47,22 @@ public class CategoryEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public List<MovieEntity> getMoviesEntity() {

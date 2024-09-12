@@ -19,17 +19,13 @@ public class UserEntity {
     @JoinColumn(name = "package_id")
     private PackageEntity packageEntity;
 
-    @Column(name = "nickname")
-    private String nickname;
-
     public UserEntity() {
     }
 
-    public UserEntity(Long id, String email, String password, String nickname, PackageEntity packageEntity) {
+    public UserEntity(Long id, String email, String password, PackageEntity packageEntity) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
         this.packageEntity = packageEntity;
     }
 
@@ -63,13 +59,5 @@ public class UserEntity {
 
     public void setPackageEntity(PackageEntity packageEntity) {
         this.packageEntity = packageEntity;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 }
