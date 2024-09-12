@@ -5,12 +5,6 @@ public class UserResponseDto {
     private String email;
     private String password;
 
-    public UserResponseDto(Long id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
-
     public UserResponseDto() {
 
     }
@@ -29,6 +23,12 @@ public class UserResponseDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public UserResponseDto(Long id, String email, String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
     }
 
     public String getPassword() {
